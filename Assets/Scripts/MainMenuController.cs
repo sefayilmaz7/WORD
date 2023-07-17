@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,6 +21,10 @@ public class MainMenuController : MonoBehaviour
     public GameObject instanceOf;
     public GameObject partOf;
 
+    [Header("Splash Screen")] 
+    public GameObject splashScreen;
+    public Image fillProgressBar;
+
     private void Awake()
     {
         typeOfButton.onClick.AddListener(TYPE_OF_CALLBACK);
@@ -28,6 +33,11 @@ public class MainMenuController : MonoBehaviour
         InRegionButton.onClick.AddListener(IN_REGION_CALLBACK);
         InstanceOfButton.onClick.AddListener(INSTANCE_OF_CALLBACK);
         PartOfButton.onClick.AddListener(PART_OF_CALLBACK);
+    }
+
+    private void Start()
+    {
+        CloseSplashScreen();
     }
 
     public void TYPE_OF_CALLBACK()
@@ -64,5 +74,27 @@ public class MainMenuController : MonoBehaviour
     {
         partOf.SetActive(true);
         gameObject.SetActive(false);
+    }
+    
+    private bool CheckConnection()
+    {
+        if (Application.internetReachability == NetworkReachability.NotReachable)
+        {
+
+            return false;
+        }
+        
+        return true;
+    }
+
+    private void CloseSplashScreen()
+    {
+        if (CheckConnection())
+        {
+            fillProgressBar.DOFillAmount(1, 1).OnComplete(() =>
+            {
+                splashScreen.GetComponent<Image>().DOFade(0, 0.3f).OnComplete(() => splashScreen.SetActive(false));
+            });
+        }
     }
 }

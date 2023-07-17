@@ -63,7 +63,6 @@ public class IsATypeOf : MonoBehaviour
                 
 
                 Response.text =  string.Join(", ", parsedData.Value);
-                Response.color = Color.white;
             }
         }
     }

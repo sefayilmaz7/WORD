@@ -69,7 +69,6 @@ public class SimiliarTo : MonoBehaviour
                 
 
                 Response.text =  string.Join(", ", parsedData.Value);
-                Response.color = Color.white;
             }
         }
     }
