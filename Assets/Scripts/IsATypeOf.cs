@@ -60,7 +60,12 @@ public class IsATypeOf : MonoBehaviour
             {
                 var r = request.downloadHandler.text;
                 var parsedData = ParseJson(r);
-                
+                if (parsedData.Value.Count == 0)
+                {
+                    Response.text = "There Were No Results!";
+                    yield return null;
+                    yield break;
+                }
 
                 Response.text =  string.Join(", ", parsedData.Value);
             }
@@ -74,7 +79,6 @@ public class IsATypeOf : MonoBehaviour
         if (jsonData.typeOf.Length == 0)
         {
             Response.text = "There Were No Results!";
-            Response.color = Color.red;
         }
         return keyValue;
     }

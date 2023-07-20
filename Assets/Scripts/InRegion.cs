@@ -59,13 +59,13 @@ public class InRegion : MonoBehaviour
             else
             {
                 var r = request.downloadHandler.text;
-                if (string.IsNullOrEmpty(r))
+                var parsedData = ParseJson(r);
+                if (parsedData.Value.Count == 0)
                 {
                     Response.text = "There Were No Results!";
-                    Response.color = Color.red;
                     yield return null;
+                    yield break;
                 }
-                var parsedData = ParseJson(r);
                 
 
                 Response.text =  string.Join(", ", parsedData.Value);
